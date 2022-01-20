@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <span>Total Clicks : 0</span>
+    <button id="btn">Click me</button>
+  </body>
+  <script>
+    let counter = 0;
+    const button = document.getElementById('btn');
+    const span = document.querySelector('span');
+    function handleClick() {
+      //   console.log('click');
+      counter = counter + 1;
+      span.innerText = `Total Click: ${counter}`;
+    }
+    button.addEventListener('click', handleClick);
+
+    // 계속 이런식으로 하면 나중에 어떤 이벤트를 넣던지 handle, handle ...
+    // 이러한 반복을 줄이기 위해서 어떻게 할까?
+  </script>
+</html>
