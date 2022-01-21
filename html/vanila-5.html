@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = document.getElementById('root');
+
+    let counter = 0;
+
+    function countUp() {
+      // 1. 이렇게만 끝내면 UI는 counter가 변동되는 것을 파악하지 못한다.
+      // Why? 리렌더링이 되어야 counter가 최신화된다.
+      counter = counter + 1;
+      render();
+    }
+
+    // 2. 렌더 함수를 만들어준다. 그러나 최고의 방법은 아니다.
+    function render() {
+      ReactDOM.render(<Container />, root);
+    }
+
+    const Container = () => (
+      <div>
+        <h3>The number of times I told Mayumi that I liked her. : {counter}</h3>
+        <button onClick={countUp}>Click me</button>
+      </div>
+    );
+
+    // 한 번만 렌더링해준다. 이것 또한, render 메소드를 반복해야한다.
+    render();
+
+    // 리액트의 장점은 기존 자바스크립트는 태그과 요소들이 업데이트 되는데,
+    // 리액트는 UI 바뀐 부분만 업데이트 함
+  </script>
+</html>

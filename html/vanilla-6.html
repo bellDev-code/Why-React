@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = document.getElementById('root');
+
+    // let counter = 0;
+    // function countUp() {
+    //   // code
+    // }
+
+    function App() {
+      // 1. 위의 코드와 같은 역할을 하는 useState 메소드!
+      const [counter, modifier] = React.useState(0);
+      // 2. 배열에 이름을 어떻게 할당할까?
+      // console.log(data); // [0, f]
+      //   const counter = data[0];
+      //   const modifier = data[1];
+
+      return (
+        <div>
+          <h3>The number of times I told Mayumi that I liked her : {data[0]}</h3>
+          <button>Click me</button>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
