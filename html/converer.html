@@ -8,30 +8,51 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
     function App() {
-      const [minutes, setMinutes] = React.useState(0);
+      const [amount, setAmount] = React.useState(0);
+      const [flipped, setFlipped] = React.useState(false);
 
       const onChange = (event) => {
-        setMinutes(event.target.value);
+        setAmount(event.target.value);
       };
 
       const reset = () => {
-        setMinutes(0);
+        setAmount(0);
+      };
+
+      const onFlip = () => {
+        reset();
+        // 부정 명제 !변수
+        setFlipped((current) => !current);
       };
 
       return (
         <div>
           <h1>Super Converter</h1>
-
           <div>
-            <h4>You want {minutes} Number!</h4>
+            <h4>You want {amount} Number!</h4>
             <label htmlFor="Minutes">Minutes</label>
-            <input placeholder="Minutes" type="number" value={minutes} onChange={onChange} />
+            <input
+              placeholder="Minutes"
+              type="number"
+              // 삼항 연산자 flipped 값이 있으면 amount * 60 없으면 amount
+              value={flipped ? amount * 60 : amount}
+              disabled={flipped}
+              onChange={onChange}
+            />
           </div>
           <div>
             <label htmlFor="Hours">Hours</label>
-            <input id="hours" placeholder="Hours" type="number" disabled value={Math.round(minutes / 60)} />
+            <input
+              id="hours"
+              placeholder="Hours"
+              type="number"
+              onChange={onChange}
+              disabled={!flipped}
+              value={flipped ? amount : Math.round(amount / 60)}
+            />
           </div>
           <button onClick={reset}>Reset</button>
+          <button onClick={onFlip}>Filp</button>
         </div>
       );
     }
