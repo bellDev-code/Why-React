@@ -7,80 +7,35 @@
   <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    function MinutesToHours() {
-      const [amount, setAmount] = React.useState(0);
-      const [flipped, setFlipped] = React.useState(false);
-
-      const onChange = (event) => {
-        setAmount(event.target.value);
-      };
-
-      const reset = () => {
-        setAmount(0);
-      };
-
-      const onFlip = () => {
-        reset();
-        // 부정 명제 !변수
-        setFlipped((current) => !current);
-      };
+    // 1. 버튼 스타일 주는데 이렇게 주면 상당히 비효율적임
+    // 2. Btn의 스타일을 정의한 컴포넌트를 만든다.
+    function Btn(props) {
+      // {text} 받을 수 있다. 오브젝트 바로 꺼내는 방법.
+      console.log(props);
       return (
-        <div>
-          <div>
-            <label htmlFor="Minutes">Minutes</label>
-            <input
-              placeholder="Minutes"
-              type="number"
-              // 삼항 연산자 flipped 값이 있으면 amount * 60 없으면 amount
-              value={flipped ? amount * 60 : amount}
-              disabled={flipped}
-              onChange={onChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="Hours">Hours</label>
-            <input
-              id="hours"
-              placeholder="Hours"
-              type="number"
-              onChange={onChange}
-              disabled={!flipped}
-              value={flipped ? amount : Math.round(amount / 60)}
-            />
-          </div>
-          <button onClick={reset}>Reset</button>
-          <button onClick={onFlip}>{flipped ? 'Turn Back' : 'Invert'}</button>
-        </div>
+        <button
+          style={{
+            backgroundColor: 'tomato',
+            color: 'white',
+            padding: '10px 20px',
+            border: 0,
+            borderRadius: 10,
+            fontSize: props.big ? 18 : 16,
+          }}
+        >
+          {props.text}
+        </button>
       );
-    }
-
-    function KmToMiles() {
-      return <h3>KM 2 M</h3>;
     }
 
     function App() {
-      const [index, setIndex] = React.useState('xx');
-
-      const onSelect = (event) => {
-        setIndex(event.target.value);
-      };
-      console.log('render w/', index);
       return (
         <div>
-          <h1>Super Converter</h1>
-          <select value={index} onChange={onSelect}>
-            <option value="xx">Select your units</option>
-            <option value="0">Minutes & Hours</option>
-            <option value="1">KM & Miles</option>
-          </select>
-          <hr />
-          {index === 'xx' ? 'Please select your units' : null}
-          {index === '0' ? <MinutesToHours /> : null}
-          {index === '1' ? <KmToMiles /> : null}
+          <Btn text="Save Changes" big={true} />
+          <Btn text="Continue" big={false} />
         </div>
       );
     }
-
     const root = document.getElementById('root');
     ReactDOM.render(<App />, root);
   </script>
