@@ -7,32 +7,35 @@
   <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    // 1. 버튼 스타일 주는데 이렇게 주면 상당히 비효율적임
-    // 2. Btn의 스타일을 정의한 컴포넌트를 만든다.
-    function Btn(props) {
-      // {text} 받을 수 있다. 오브젝트 바로 꺼내는 방법.
-      console.log(props);
+    function Btn({ text, changeValue }) {
+      console.log(text, 'was rerender');
       return (
         <button
+          onClick={changeValue}
           style={{
             backgroundColor: 'tomato',
             color: 'white',
             padding: '10px 20px',
             border: 0,
             borderRadius: 10,
-            fontSize: props.big ? 18 : 16,
           }}
         >
-          {props.text}
+          {text}
         </button>
       );
     }
 
+    // props가 변경되어도 리액트에게 리렌더링 하지마! 하는 기능 React.memo()
+    const MemorizedBtn = React.memo(Btn);
+
     function App() {
+      const [value, setValue] = React.useState('Save Changes');
+
+      const changeValue = () => setValue('Revert Changes');
       return (
         <div>
-          <Btn text="Save Changes" big={true} />
-          <Btn text="Continue" big={false} />
+          <MemorizedBtn text={value} changeValue={changeValue} />
+          <MemorizedBtn text="Continue" />
         </div>
       );
     }
